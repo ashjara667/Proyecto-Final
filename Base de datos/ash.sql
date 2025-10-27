@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `cole` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `cole`;
 -- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cole
@@ -42,29 +40,6 @@ LOCK TABLES `asigntura` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `curso`
---
-
-DROP TABLE IF EXISTS `curso`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `curso` (
-  `idcurso` int NOT NULL,
-  `dircur` varchar(36) NOT NULL,
-  PRIMARY KEY (`idcurso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `curso`
---
-
-LOCK TABLES `curso` WRITE;
-/*!40000 ALTER TABLE `curso` DISABLE KEYS */;
-/*!40000 ALTER TABLE `curso` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `estudiante`
 --
 
@@ -75,11 +50,11 @@ CREATE TABLE `estudiante` (
   `idestudiante` int NOT NULL,
   `nombre` varchar(18) NOT NULL,
   `apellido` varchar(18) NOT NULL,
-  `sexo` enum('Masculino','Femenino') NOT NULL,
-  `fechaactu` datetime NOT NULL,
+  `sexo` enum('M','F') NOT NULL,
+  `fechaactu` date NOT NULL,
+  `grado` varchar(10) NOT NULL,
   PRIMARY KEY (`idestudiante`),
-  KEY `fechaactu_idx` (`fechaactu`),
-  CONSTRAINT `fechaactu` FOREIGN KEY (`fechaactu`) REFERENCES `fecha` (`fechaactu`)
+  KEY `cu_idx` (`grado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,11 +98,9 @@ DROP TABLE IF EXISTS `grado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grado` (
-  `idgrdo` int NOT NULL,
-  `idcurso` int NOT NULL,
-  PRIMARY KEY (`idgrdo`),
-  KEY `idcurso_idx` (`idcurso`),
-  CONSTRAINT `idcurso` FOREIGN KEY (`idcurso`) REFERENCES `curso` (`idcurso`)
+  `idgrdo` varchar(10) NOT NULL,
+  `curso` int NOT NULL,
+  `docente` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -137,16 +110,9 @@ CREATE TABLE `grado` (
 
 LOCK TABLES `grado` WRITE;
 /*!40000 ALTER TABLE `grado` DISABLE KEYS */;
+INSERT INTO `grado` VALUES ('Once',1101,'Ana Milena'),('Once',1102,'Pepita'),('Once',1103,'Carolina'),('Once',1104,'Viviana'),('Decimo',1001,'Lupita'),('Decimo',1002,'Johana'),('Decimo',1003,'Luisa'),('Noveno',901,'Juan'),('Noveno',902,'Gabriela'),('Noveno',903,'Jorge');
 /*!40000 ALTER TABLE `grado` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'cole'
---
-
---
--- Dumping routines for database 'cole'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -157,4 +123,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-15 21:52:52
+-- Dump completed on 2025-10-27  9:37:04
